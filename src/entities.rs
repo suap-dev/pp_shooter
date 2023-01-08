@@ -14,17 +14,34 @@ pub struct Projectile {
 }
 
 impl Projectile {
+    pub fn new(model: [String; 2], base_speed: f32, range: f32) -> Projectile {
+        Projectile {
+            model,
+            facing: Facing::Right,
+            position: Vec2::zero(),
+            velocity: Vec2::zero(),
+            base_speed,
+            range,
+        }
+    }
+
     pub fn clone_facing_at(&self, facing: Facing, position: Vec2) -> Projectile {
         Projectile {
             model: [self.model[0].clone(), self.model[1].clone()],
             facing,
             position,
             velocity: match facing {
-                Facing::Right => Vec2 { x: self.base_speed, y: 0.0 },
-                Facing::Left => Vec2 { x: -self.base_speed, y: 0.0 }
+                Facing::Right => Vec2 {
+                    x: self.base_speed,
+                    y: 0.0,
+                },
+                Facing::Left => Vec2 {
+                    x: -self.base_speed,
+                    y: 0.0,
+                },
             },
             base_speed: self.base_speed,
-            range: self.range
+            range: self.range,
         }
     }
 
@@ -37,14 +54,6 @@ impl Projectile {
         );
     }
 
-    pub fn shoot(&mut self, facing: Facing) {
-        self.velocity = match facing {
-            Facing::Right => Vec2::new(self.base_speed, 0.0),
-            Facing::Left => Vec2::new(-self.base_speed, 0.0),
-        };        
-        self.facing = facing
-    }
-
     pub fn proceed_in_time(&mut self) {
         self.position += self.velocity;
         self.range -= self.velocity.magnitude();
@@ -53,15 +62,14 @@ impl Projectile {
     pub fn remaining_range(&self) -> f32 {
         self.range
     }
-    
 }
 
 pub struct ProjectileHandler {
     projectiles: Vec<Projectile>,
 }
 impl ProjectileHandler {
-    pub fn new() -> ProjectileHandler{
-        ProjectileHandler{
+    pub fn new() -> ProjectileHandler {
+        ProjectileHandler {
             projectiles: Vec::new(),
         }
     }
@@ -78,7 +86,7 @@ impl ProjectileHandler {
             } else {
                 false
             }
-        });        
+        });
     }
 }
 
@@ -87,7 +95,7 @@ pub struct Player {
     pub facing: Facing,
     pub position: Vec2,
     pub velocity: Vec2,
-    pub base_speed: f32,    
+    pub base_speed: f32,
     pub projectile_type: Projectile,
 }
 impl Player {
@@ -120,8 +128,9 @@ impl Player {
     //     projectile.shoot(self.facing);
     // }
 
-    pub fn shoot(&self) -> Projectile{
-        self.projectile_type.clone_facing_at(self.facing, self.get_barrel_exit_coords())
+    pub fn shoot(&self) -> Projectile {
+        self.projectile_type
+            .clone_facing_at(self.facing, self.get_barrel_exit_coords())
     }
 
     pub fn get_barrel_exit_coords(&self) -> Vec2 {

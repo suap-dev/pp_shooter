@@ -15,14 +15,7 @@ fn main() {
         position: Vec2::inew(8, 4),
         velocity: Vec2::zero(),
         base_speed: 0.2,
-        projectile_type: Projectile {
-            model: [String::from("=~-"),String::from("-~=")], // length of this string should be taken into consideration
-            facing: Facing::Left,
-            position: Vec2::zero(),
-            velocity: Vec2::zero(),
-            base_speed: 2.0,
-            range: 120.0
-        }
+        projectile_type: Projectile::new([String::from("=~-"), String::from("-~=")], 2.0, 120.0),
     };
 
     let mut projectile_handler = ProjectileHandler::new();
@@ -32,7 +25,6 @@ fn main() {
         screen.clear_screen();
 
         // we are going to create a picture
-        // bullet.update_frame(&mut screen);
         projectile_handler.update_frame(&mut screen);
         p1.update_frame(&mut screen);
 
