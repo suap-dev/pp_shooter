@@ -1,4 +1,17 @@
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{Add, Div, Mul, Sub, AddAssign, SubAssign, MulAssign, DivAssign};
+
+#[derive(Clone, Copy)]
+pub enum Facing {
+    Left,
+    Right,
+}
+
+pub enum Direction {
+    Left,
+    Right,
+    Up,
+    Down,
+}
 
 #[derive(Clone, Copy)]
 pub struct Vec2 {
@@ -29,6 +42,14 @@ impl Add for Vec2 {
         }
     }
 }
+impl AddAssign for Vec2 {
+    fn add_assign(&mut self, rhs: Self) {
+        *self = Self {
+            x: self.x + rhs.x,
+            y: self.y + rhs.y,
+        };
+    }
+}
 impl Sub for Vec2 {
     type Output = Self;
 
@@ -37,6 +58,14 @@ impl Sub for Vec2 {
             x: self.x - rhs.x,
             y: self.y - rhs.y,
         }
+    }
+}
+impl SubAssign for Vec2 {
+    fn sub_assign(&mut self, rhs: Self) {
+        *self = Self {
+            x: self.x + rhs.x,
+            y: self.y + rhs.y,
+        };        
     }
 }
 impl Mul<f32> for Vec2 {
@@ -59,6 +88,14 @@ impl Mul<Vec2> for f32 {
         }
     }
 }
+impl MulAssign<f32> for Vec2 {
+    fn mul_assign(&mut self, rhs: f32) {
+        *self = Self {
+            x: self.x + rhs,
+            y: self.y + rhs,
+        };
+    }
+}
 impl Mul<i32> for Vec2 {
     type Output = Self;
 
@@ -79,6 +116,14 @@ impl Mul<Vec2> for i32 {
         }
     }
 }
+impl MulAssign<i32> for Vec2 {
+    fn mul_assign(&mut self, rhs: i32) {
+        *self = Self {
+            x: self.x + rhs as f32,
+            y: self.y + rhs as f32,
+        };
+    }
+}
 impl Div<f32> for Vec2 {
     type Output = Self;
 
@@ -87,6 +132,14 @@ impl Div<f32> for Vec2 {
             x: self.x / rhs,
             y: self.y / rhs,
         }
+    }
+}
+impl DivAssign<f32> for Vec2 {
+    fn div_assign(&mut self, rhs: f32) {
+        *self = Self {
+            x: self.x + rhs,
+            y: self.y + rhs,
+        };
     }
 }
 impl Div<i32> for Vec2 {
@@ -99,16 +152,11 @@ impl Div<i32> for Vec2 {
         }
     }
 }
-
-#[derive(Clone, Copy)]
-pub enum Facing {
-    Left,
-    Right,
-}
-
-pub enum Direction {
-    Left,
-    Right,
-    Up,
-    Down,
+impl DivAssign<i32> for Vec2 {
+    fn div_assign(&mut self, rhs: i32) {
+        *self = Self {
+            x: self.x + rhs as f32,
+            y: self.y + rhs as f32,
+        };
+    }
 }
