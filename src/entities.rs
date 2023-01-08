@@ -21,19 +21,13 @@ impl Projectile {
 
     pub fn shoot(&mut self, facing: Facing) {
         self.velocity = match facing {
-            Facing::Right => Vec2 {
-                x: self.base_speed,
-                y: 0.,
-            },
-            Facing::Left => Vec2 {
-                x: -self.base_speed,
-                y: 0.,
-            },
+            Facing::Right => Vec2::new(self.base_speed, 0.0),
+            Facing::Left => Vec2::new(-self.base_speed, 0.0),
         }
     }
 
     pub fn proceed_in_time(&mut self) {
-        self.position = self.position + self.velocity;
+        self.position += self.velocity;
     }
 }
 
@@ -67,37 +61,25 @@ impl Player {
 
     pub fn go(&mut self, direction: Direction) {
         self.velocity = match direction {
-            Direction::Up => Vec2 {
-                x: 0.,
-                y: -self.base_speed,
-            },
-            Direction::Down => Vec2 {
-                x: 0.,
-                y: self.base_speed,
-            },
+            Direction::Up => Vec2::new(0.0, -self.base_speed),
+            Direction::Down => Vec2::new(0.0, self.base_speed),
             Direction::Left => {
                 self.facing = Facing::Left;
-                Vec2 {
-                    x: -2.0 * self.base_speed,
-                    y: 0.,
-                }
+                Vec2::new(-2.0 * self.base_speed, 0.0)
             }
             Direction::Right => {
                 self.facing = Facing::Right;
-                Vec2 {
-                    x: 2.0 * self.base_speed,
-                    y: 0.,
-                }
+                Vec2::new(2.0 * self.base_speed, 0.0)
             }
         }
     }
 
     pub fn stop(&mut self) {
-        self.velocity = Vec2 { x: 0., y: 0. };
+        self.velocity = Vec2::zero();
     }
 
     pub fn proceed_in_time(&mut self) {
-        self.position = self.position + self.velocity;
+        self.position += self.velocity;
     }
 
     pub fn shoot(&mut self, projectile: &mut Projectile) {

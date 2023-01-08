@@ -12,7 +12,7 @@ fn main() {
     let mut screen = ConsoleEngine::init_fill(60).unwrap();
 
     let mut bullet: Projectile = Projectile {
-        position: Vec2::inew(-1,-1),
+        position: -1*Vec2::one(),
         model: String::from("--"), // length of this string should be taken into consideration
         velocity: Vec2::zero(),
         base_speed: 2.0,
