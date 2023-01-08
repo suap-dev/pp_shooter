@@ -6,8 +6,6 @@ use entities::{Player, Projectile};
 
 use console_engine::{ConsoleEngine, KeyCode};
 
-// TODO: Make the shooting mechanism work correctly... Make the projectile move.
-
 fn main() {
     let mut screen = ConsoleEngine::init_fill(60).unwrap();
 
