@@ -38,7 +38,8 @@ pub struct Player {
     pub facing: Facing,
     pub position: Vec2,
     pub velocity: Vec2,
-    pub base_speed: f32,
+    pub base_speed: f32,    
+    pub projectile_type: Projectile,
 }
 impl Player {
     pub fn go(&mut self, direction: Direction) {
