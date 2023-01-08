@@ -8,6 +8,7 @@ pub struct Projectile {
     pub position: Vec2,
     pub velocity: Vec2,
     pub base_speed: f32,
+    pub range: f32,
 }
 
 impl Projectile {
@@ -30,6 +31,11 @@ impl Projectile {
 
     pub fn proceed_in_time(&mut self) {
         self.position += self.velocity;
+        self.range -= self.velocity.magnitude();
+    }
+
+    pub fn remaining_range(&self) -> f32 {
+        self.range
     }
 }
 
