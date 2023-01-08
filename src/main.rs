@@ -9,15 +9,6 @@ use console_engine::{ConsoleEngine, KeyCode};
 fn main() {
     let mut screen = ConsoleEngine::init_fill(60).unwrap();
 
-    let mut bullet: Projectile = Projectile {
-        model: [String::from("=~-"),String::from("-~=")], // length of this string should be taken into consideration
-        facing: Facing::Left,
-        position: -1*Vec2::one(),
-        velocity: Vec2::zero(),
-        base_speed: 2.0,
-        range: 30.0
-    };
-
     let mut p1 = Player {
         model: [String::from("c==3"), String::from("Ɛ==ↄ")],
         facing: Facing::Right,
@@ -66,21 +57,6 @@ fn main() {
         if screen.is_key_pressed(KeyCode::Char(' ')) {
             p1.stop();
         }
-
-        // ...handle the logic, keys, maths, etc.
-        // if screen.is_key_held(KeyCode::Right) {
-        //     p1.go_right();
-        // }
-        // if screen.is_key_held(KeyCode::Left) {
-        //     p1.go_left();
-        // }
-        // if screen.is_key_held(KeyCode::Up) {
-        //     p1.go_up();
-        // }
-        // if screen.is_key_held(KeyCode::Down) {
-        //     p1.go_down();
-        // }
-
         if screen.is_key_released(KeyCode::Enter) {
             projectile_handler.handle(p1.shoot());
         }
