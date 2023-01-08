@@ -1,5 +1,3 @@
-use std::default;
-
 use console_engine::ConsoleEngine;
 
 use crate::data_structs::{Direction, Facing, Vec2};
