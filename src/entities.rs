@@ -1,3 +1,5 @@
+use std::default;
+
 use console_engine::ConsoleEngine;
 
 use crate::data_structs::{Direction, Facing, Vec2};
@@ -12,6 +14,20 @@ pub struct Projectile {
 }
 
 impl Projectile {
+    pub fn clone_facing_at(&self, facing: Facing, position: Vec2) -> Projectile {
+        Projectile {
+            model: [self.model[0].clone(), self.model[1].clone()],
+            facing,
+            position,
+            velocity: match facing {
+                Facing::Right => Vec2 { x: self.base_speed, y: 0.0 },
+                Facing::Left => Vec2 { x: -self.base_speed, y: 0.0 }
+            },
+            base_speed: self.base_speed,
+            range: self.range
+        }
+    }
+
     pub fn update_frame(&mut self, screen: &mut ConsoleEngine) {
         self.proceed_in_time();
         screen.print(
@@ -37,6 +53,33 @@ impl Projectile {
     pub fn remaining_range(&self) -> f32 {
         self.range
     }
+    
+}
+
+pub struct ProjectileHandler {
+    projectiles: Vec<Projectile>,
+}
+impl ProjectileHandler {
+    pub fn new() -> ProjectileHandler{
+        ProjectileHandler{
+            projectiles: Vec::new(),
+        }
+    }
+
+    pub fn handle(&mut self, projectile: Projectile) {
+        self.projectiles.push(projectile);
+    }
+
+    pub fn update_frame(&mut self, screen: &mut ConsoleEngine) {
+        self.projectiles.retain_mut(|projectile| {
+            if projectile.remaining_range() > 0.0 {
+                projectile.update_frame(screen);
+                true
+            } else {
+                false
+            }
+        });        
+    }
 }
 
 pub struct Player {
@@ -54,11 +97,11 @@ impl Player {
             Direction::Down => Vec2::new(0.0, self.base_speed),
             Direction::Left => {
                 self.facing = Facing::Left;
-                Vec2::new(-2.0 * self.base_speed, 0.0)
+                Vec2::new(-3.0 * self.base_speed, 0.0)
             }
             Direction::Right => {
                 self.facing = Facing::Right;
-                Vec2::new(2.0 * self.base_speed, 0.0)
+                Vec2::new(3.0 * self.base_speed, 0.0)
             }
         }
     }
@@ -71,10 +114,14 @@ impl Player {
         self.position += self.velocity;
     }
 
-    pub fn shoot(&mut self, projectile: &mut Projectile) {
-        // FIXME: generalise projectile update
-        projectile.position = self.get_barrel_exit_coords();
-        projectile.shoot(self.facing);
+    // pub fn shoot(&mut self, projectile: &mut Projectile) {
+    //     // FIXME: generalise projectile update
+    //     projectile.position = self.get_barrel_exit_coords();
+    //     projectile.shoot(self.facing);
+    // }
+
+    pub fn shoot(&self) -> Projectile{
+        self.projectile_type.clone_facing_at(self.facing, self.get_barrel_exit_coords())
     }
 
     pub fn get_barrel_exit_coords(&self) -> Vec2 {
