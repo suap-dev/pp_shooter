@@ -3,7 +3,8 @@ use console_engine::ConsoleEngine;
 use crate::data_structs::{Direction, Facing, Vec2};
 
 pub struct Projectile {
-    pub model: String,
+    pub model: [String; 2],
+    pub facing: Facing,
     pub position: Vec2,
     pub velocity: Vec2,
     pub base_speed: f32,
@@ -15,7 +16,7 @@ impl Projectile {
         screen.print(
             self.position.x as i32,
             self.position.y as i32,
-            self.model.as_str(),
+            self.model[self.facing as usize].as_str(),
         );
     }
 
