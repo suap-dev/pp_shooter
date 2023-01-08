@@ -23,6 +23,13 @@ fn main() {
         position: Vec2::inew(8, 4),
         velocity: Vec2::zero(),
         base_speed: 0.3,
+        projectile_type: Projectile {
+            model: [String::from("=~-"),String::from("-~=")], // length of this string should be taken into consideration
+            facing: Facing::Left,
+            position: -1*Vec2::one(),
+            velocity: Vec2::zero(),
+            base_speed: 2.0,
+        }
     };
 
     loop {
