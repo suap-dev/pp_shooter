@@ -34,31 +34,11 @@ impl Projectile {
 pub struct Player {
     pub model: [String; 2],
     pub facing: Facing,
-    pub direction: Direction,
     pub position: Vec2,
-    pub should_shoot: bool,
     pub velocity: Vec2,
     pub base_speed: f32,
 }
 impl Player {
-    // pub fn go_right(&mut self) {
-    //     self.position = self.velocity + self.velocity +;
-    //     self.facing = Facing::Right;
-    // }
-
-    // pub fn go_left(&mut self) {
-    //     self.position.x -= self.velocity*2;
-    //     self.facing = Facing::Left;
-    // }
-
-    // pub fn go_up(&mut self) {
-    //     self.position.y -= self.velocity;
-    // }
-
-    // pub fn go_down(&mut self) {
-    //     self.position.y += self.velocity;
-    // }
-
     pub fn go(&mut self, direction: Direction) {
         self.velocity = match direction {
             Direction::Up => Vec2::new(0.0, -self.base_speed),
@@ -86,17 +66,7 @@ impl Player {
         // FIXME: generalise projectile update
         projectile.position = self.get_barrel_exit_coords();
         projectile.shoot(self.facing);
-
-        // projectile.velocity = match self.facing {
-        //     Facing::Right => Vec2{x: 0.5,y: 0.},
-        //     Facing::Left => Vec2{x: 0.5,y: 0.},
-        // }
-        // self.should_shoot = true;
     }
-
-    // fn stop_shooting(&mut self) {
-    //     self.should_shoot = false;
-    // }
 
     pub fn get_barrel_exit_coords(&self) -> Vec2 {
         // this is very dirty
@@ -124,9 +94,5 @@ impl Player {
             self.position.y as i32,
             self.model[self.facing as usize].as_str(),
         );
-
-        // if self.should_shoot {
-        //     self.should_shoot = false;
-        // }
     }
 }
