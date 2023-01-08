@@ -15,6 +15,7 @@ fn main() {
         position: -1*Vec2::one(),
         velocity: Vec2::zero(),
         base_speed: 2.0,
+        range: 30.0
     };
 
     let mut p1 = Player {
@@ -29,6 +30,7 @@ fn main() {
             position: -1*Vec2::one(),
             velocity: Vec2::zero(),
             base_speed: 2.0,
+            range: 30.0
         }
     };
 
