@@ -33,8 +33,8 @@ fn main() {
         screen.clear_screen();
 
         // we are going to create a picture
-        bullet.add_to_frame(&mut screen);
-        p1.add_to_frame(&mut screen);
+        bullet.update_frame(&mut screen);
+        p1.update_frame(&mut screen);
 
         // here we are drawing created picture
         screen.draw();
@@ -78,9 +78,5 @@ fn main() {
         if screen.is_key_pressed(KeyCode::Esc) {
             break;
         }
-
-        // game logic
-        p1.proceed_in_time();
-        bullet.proceed_in_time();
     }
 }

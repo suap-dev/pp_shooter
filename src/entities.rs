@@ -10,7 +10,8 @@ pub struct Projectile {
 }
 
 impl Projectile {
-    pub fn add_to_frame(&mut self, screen: &mut ConsoleEngine) {
+    pub fn update_frame(&mut self, screen: &mut ConsoleEngine) {
+        self.proceed_in_time();
         screen.print(
             self.position.x as i32,
             self.position.y as i32,
@@ -134,7 +135,8 @@ impl Player {
         Vec2 { x, y }
     }
 
-    pub fn add_to_frame(&mut self, screen: &mut ConsoleEngine) {
+    pub fn update_frame(&mut self, screen: &mut ConsoleEngine) {
+        self.proceed_in_time();
         screen.print(
             self.position.x as i32,
             self.position.y as i32,
