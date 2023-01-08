@@ -1,4 +1,4 @@
-use std::ops::{Add, Div, Mul, Sub, AddAssign, SubAssign, MulAssign, DivAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Clone, Copy)]
 pub enum Facing {
@@ -30,6 +30,9 @@ impl Vec2 {
     }
     pub fn one() -> Self {
         Self { x: 1.0, y: 1.0 }
+    }
+    pub fn magnitude(&self) -> f32 {
+        f32::sqrt(self.x * self.x + self.y * self.y)
     }
 }
 impl Add for Vec2 {
@@ -65,7 +68,7 @@ impl SubAssign for Vec2 {
         *self = Self {
             x: self.x + rhs.x,
             y: self.y + rhs.y,
-        };        
+        };
     }
 }
 impl Mul<f32> for Vec2 {
