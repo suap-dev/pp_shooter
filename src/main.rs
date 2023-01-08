@@ -15,7 +15,7 @@ fn main() {
         position: Vec2 { x: -1., y: -1. },
         model: String::from("--"), // length of this string should be taken into consideration
         velocity: Vec2 { x: 0., y: 0. },
-        speed: 1.0,
+        base_speed: 2.0,
     };
 
     let mut p1 = Player {
@@ -24,6 +24,7 @@ fn main() {
         direction: Direction::Right,
         position: Vec2 { x: 8., y: 4. },
         velocity: Vec2 { x: 0., y: 0. },
+        base_speed: 0.3,
         should_shoot: false,
     };
 
