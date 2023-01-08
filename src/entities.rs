@@ -24,7 +24,8 @@ impl Projectile {
         self.velocity = match facing {
             Facing::Right => Vec2::new(self.base_speed, 0.0),
             Facing::Left => Vec2::new(-self.base_speed, 0.0),
-        }
+        };        
+        self.facing = facing
     }
 
     pub fn proceed_in_time(&mut self) {
