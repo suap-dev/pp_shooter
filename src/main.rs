@@ -21,11 +21,9 @@ fn main() {
     let mut p1 = Player {
         model: [String::from("c==3"), String::from("Ɛ==ↄ")],
         facing: Facing::Right,
-        direction: Direction::Right,
         position: Vec2::inew(8, 4),
         velocity: Vec2::zero(),
         base_speed: 0.3,
-        should_shoot: false,
     };
 
     loop {
