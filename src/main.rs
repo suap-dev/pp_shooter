@@ -11,7 +11,12 @@ use console_engine::{ConsoleEngine, KeyCode};
 fn main() {
     let mut screen = ConsoleEngine::init_fill(30).unwrap();
 
-    let mut bullet: Projectile = Projectile {
+    //TODO: Make the projectiles from Vec, cease to exist after they passed the end screen (if they coords are still in the limit od screen or not, check the coords of the screen)
+    // Vec needs to know what type of data it stores
+    
+    let mut projectiles: Vec<Projectile> = Vec::new();
+
+    let bullet: Projectile = Projectile {
         position: Coords { x: -1, y: -1 },
         model: String::from("-"), // length of this string should be taken into consideration
         velocity: 1,
@@ -23,14 +28,20 @@ fn main() {
         position: Coords { x: 8, y: 4 },
         should_shoot: false,
     };
+    // let mut czy = false;
 
     loop {
         // this clears everything
         screen.clear_screen();
 
         // we are going to create a picture
-        bullet.add_to_frame(&mut screen);
-        p1.add_to_frame(&mut screen);
+        // bullet1.add_to_frame(&mut screen);
+        // bullet2.add_to_frame(&mut screen);
+        p1.update_frame(&mut screen);
+        for projectile in &mut projectiles {
+            projectile.update_frame(&mut screen);
+        }
+        screen.print(1,1,projectiles.len().to_string().as_str());
 
         // here we are drawing created picture
         screen.draw();
@@ -52,13 +63,20 @@ fn main() {
             p1.go_down();
         }
         if screen.is_key_released(KeyCode::Enter) {
-            p1.shoot(&mut bullet);
+            // if czy {bullet1 = p1.shoot(& bullet)};
+            // if !czy {bullet2 = p1.shoot(& bullet)};
+            // czy = !czy;
+
+            let mut bullet1 = p1.shoot(&bullet);
+
+            projectiles.push(bullet1);
         }
         if screen.is_key_pressed(KeyCode::Esc) {
             break;
         }
 
         // game logic
-        bullet.proceed_in_time();
+        // bullet1.proceed_in_time();
+        // bullet2.proceed_in_time();
     }
 }
