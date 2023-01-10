@@ -7,18 +7,21 @@ pub struct Projectile {
     pub position: Coords,
     pub model: String,
     pub velocity: i32,
+    pub valid: bool,
 }
 impl Projectile {
     pub fn update_frame(&mut self, screen: &mut ConsoleEngine) {
-        self.proceed_in_time();
+        self.proceed_in_time(screen);
         screen.print(self.position.x, self.position.y, self.model.as_str());
     }
 
-    pub fn proceed_in_time(&mut self) {
-        self.position.x += self.velocity;
+    pub fn proceed_in_time(&mut self, screen: &ConsoleEngine) {
+        if self.position.x > screen.get_width() as i32 || self.position.x < 0 {
+            self.valid = false
+        } else {
+            self.position.x += self.velocity;
+        }
     }
-
-
 }
 pub struct Player {
     pub model: [String; 2],
@@ -45,44 +48,23 @@ impl Player {
         self.position.y += 1;
     }
 
-    pub fn shoot(&mut self, projectile: &Projectile) -> Projectile{
+    pub fn shoot(&mut self, projectile: &Projectile) -> Projectile {
         let mut projectile_clone = projectile.clone();
 
         // FIXME: generalise projectile update
-        projectile_clone.position = self.get_barrel_exit_coords();        
+        projectile_clone.position = self.get_barrel_exit_coords();
         projectile_clone.velocity = match self.facing {
             Facing::Right => 1,
             Facing::Left => -1,
-        
         };
         // returning the clone
         projectile_clone
-
-        // let mut bullet2 = projectile.clone();
-
-        // return bullet2;
-
-        // let mut bullet2: Projectile = Projectile {
-        //     position: Coords { x: -1, y: -1 },
-        //     model: String::from("-"),
-        //     velocity: 1,
-        // };
-    
-
-        // projectile.model = "-".to_string();
 
         // lvalue vs rvalue
         // "-" ;
         // 09 ;
         // assert!("-3".to_string() == String::from("-3"));
-
-                
-        // self.should_shoot = true;
     }
-
-    // fn stop_shooting(&mut self) {
-    //     self.should_shoot = false;
-    // }
 
     pub fn get_barrel_exit_coords(&self) -> Coords {
         // this is very dirty
@@ -109,9 +91,5 @@ impl Player {
             self.position.y,
             self.model[self.facing as usize].as_str(),
         );
-        
-        // if self.should_shoot {
-        //     self.should_shoot = false;
-        // }
     }
 }
