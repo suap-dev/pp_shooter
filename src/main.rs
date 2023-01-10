@@ -24,6 +24,7 @@ fn main() {
         facing: Facing::Left,
         position: Coords { x: 8, y: 4 },
         should_shoot: false,
+        valid: true,
     };
 
     loop {
@@ -32,6 +33,7 @@ fn main() {
         // projectiles.retain(is_valid);
 
         projectiles.retain(|x| x.valid);
+        
 
         // TODO: when I grow up I will do it through retain_mut
 
@@ -53,16 +55,16 @@ fn main() {
 
         // ...handle the logic, keys, maths, etc.
         if screen.is_key_held(KeyCode::Right) {
-            p1.go_right();
+            p1.go_right(&mut screen);
         }
         if screen.is_key_held(KeyCode::Left) {
-            p1.go_left();
+            p1.go_left(&mut screen);
         }
         if screen.is_key_held(KeyCode::Up) {
-            p1.go_up();
+            p1.go_up(&mut screen);
         }
         if screen.is_key_held(KeyCode::Down) {
-            p1.go_down();
+            p1.go_down(&mut screen);
         }
         if screen.is_key_released(KeyCode::Enter) {
             let bullet1 = p1.shoot(&bullet);

@@ -28,24 +28,46 @@ pub struct Player {
     pub facing: Facing,
     pub position: Coords,
     pub should_shoot: bool,
+    pub valid: bool,
 }
 impl Player {
-    pub fn go_right(&mut self) {
-        self.position.x += 1;
-        self.facing = Facing::Right;
+    pub fn go_right(&mut self, screen: &ConsoleEngine) {
+        let mut len = 0;
+        for _ in self.model[1].chars() {
+            len += 1;
+        }
+
+        if self.position.x > screen.get_width() as i32 - len - 1 {
+            self.valid = false
+        } else {
+            self.position.x += 1;
+            self.facing = Facing::Right;
+        }
     }
 
-    pub fn go_left(&mut self) {
-        self.position.x -= 1;
-        self.facing = Facing::Left;
+    pub fn go_left(&mut self, screen: &ConsoleEngine) {
+        if self.position.x <= 0 {
+            self.valid = false
+        } else {
+            self.position.x -= 1;
+            self.facing = Facing::Left;
+        }
     }
 
-    pub fn go_up(&mut self) {
-        self.position.y -= 1;
+    pub fn go_up(&mut self, screen: &ConsoleEngine) {
+        if self.position.y <= 0 {
+            self.valid = false
+        } else {
+            self.position.y -= 1;
+        }
     }
 
-    pub fn go_down(&mut self) {
-        self.position.y += 1;
+    pub fn go_down(&mut self, screen: &ConsoleEngine) {
+        if self.position.y >= screen.get_height() as i32 - 1 {
+            self.valid = false
+        } else {
+            self.position.y += 1;
+        }
     }
 
     pub fn shoot(&mut self, projectile: &Projectile) -> Projectile {
