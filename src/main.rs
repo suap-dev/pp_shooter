@@ -7,7 +7,7 @@ use entities::{Player, Projectile};
 use console_engine::{ConsoleEngine, KeyCode};
 
 fn main() {
-    let mut screen = ConsoleEngine::init_fill(30).unwrap();
+    let mut screen = ConsoleEngine::init(30, 15, 30).unwrap();
     // Vec needs to know what type of data it stores
 
     let mut projectiles: Vec<Projectile> = Vec::new();
@@ -24,7 +24,6 @@ fn main() {
         facing: Facing::Left,
         position: Coords { x: 8, y: 4 },
         should_shoot: false,
-        valid: true,
     };
 
     loop {
@@ -33,7 +32,6 @@ fn main() {
         // projectiles.retain(is_valid);
 
         projectiles.retain(|x| x.valid);
-        
 
         // TODO: when I grow up I will do it through retain_mut
 

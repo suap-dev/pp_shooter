@@ -28,44 +28,40 @@ pub struct Player {
     pub facing: Facing,
     pub position: Coords,
     pub should_shoot: bool,
-    pub valid: bool,
 }
+
 impl Player {
     pub fn go_right(&mut self, screen: &ConsoleEngine) {
-        let mut len = 0;
-        for _ in self.model[1].chars() {
-            len += 1;
-        }
+        let screen_width = screen.get_width() as i32;
+        let my_width = self.get_width();
 
-        if self.position.x > screen.get_width() as i32 - len - 1 {
-            self.valid = false
-        } else {
+        // if self.position.x + my_width - 1 < screen_width - 1 {  // |+1
+        if self.position.x + my_width < screen_width {
             self.position.x += 1;
-            self.facing = Facing::Right;
         }
+
+        self.facing = Facing::Right
     }
 
-    pub fn go_left(&mut self, screen: &ConsoleEngine) {
-        if self.position.x <= 0 {
-            self.valid = false
-        } else {
+    pub fn go_left(&mut self, _screen: &ConsoleEngine) {
+        if self.position.x > 0 {
             self.position.x -= 1;
-            self.facing = Facing::Left;
         }
+
+        self.facing = Facing::Left;
     }
 
-    pub fn go_up(&mut self, screen: &ConsoleEngine) {
-        if self.position.y <= 0 {
-            self.valid = false
-        } else {
+    pub fn go_up(&mut self, _screen: &ConsoleEngine) {
+        if self.position.y > 0 {
             self.position.y -= 1;
         }
     }
 
     pub fn go_down(&mut self, screen: &ConsoleEngine) {
-        if self.position.y >= screen.get_height() as i32 - 1 {
-            self.valid = false
-        } else {
+        let screen_height = screen.get_height() as i32;
+        let my_height = self.get_height();
+
+        if self.position.y + my_height < screen_height as i32 {
             self.position.y += 1;
         }
     }
@@ -88,13 +84,30 @@ impl Player {
         // assert!("-3".to_string() == String::from("-3"));
     }
 
+    pub fn get_width(&self) -> i32 {
+        let mut len = 0;
+
+        for _ in self.model[0].chars() {
+            len += 1;
+        }
+
+        len
+    }
+
+    pub fn get_height(&self) -> i32 {
+        1
+    }
+
     pub fn get_barrel_exit_coords(&self) -> Coords {
         // this is very dirty
         // TODO: make it better...
-        let mut len = 0;
-        for _ in self.model[1].chars() {
-            len += 1;
-        }
+
+        // let mut len = 0;
+        // for _ in self.model[1].chars() {
+        //     len += 1;
+        // }
+
+        let len = self.get_width();
 
         // this is very... situational...
         let x: i32 = match self.facing {
