@@ -3,35 +3,65 @@ pub mod entities;
 
 use console_engine::{Color, KeyCode};
 use engine::{pixel::Pixel, vector2f::Vec2f};
+use entities::{Actor, Model, traits::{Drawable, Entity}};
 
 fn main() {
-    let mut screen = engine::MyEngine::init(30, 15, 15);
-
-    // let px_list = vec![
-    //     Pixel::new(Color::Magenta, Vec2f::inew(0, 0)),
-    //     Pixel::new(Color::Magenta, Vec2f::inew(1, 0)),
-    //     Pixel::new(Color::Magenta, Vec2f::inew(1, 1)),
-    //     Pixel::new(Color::Magenta, Vec2f::inew(1, 2)),
-    // ];
+    let mut screen = engine::MyEngine::init(80, 30, 15);
     
-    // let center = Vec2f::new(
-    //     screen.get_width() as f32 / 4.0,
-    //     screen.get_height() as f32 / 2.0,
-    // );
+    let center = Vec2f::new(
+        screen.get_width() as f32 / 2.0,
+        screen.get_height() as f32 / 2.0,
+    );
 
+    let body_color = Color::DarkGrey;
+    let eyes_color = Color::White;
+    
+    let mut a: Actor = Actor::from_model( Model{
+        pixels: vec![
+            Pixel::new(body_color, Vec2f::inew(0, 0)),
+            Pixel::new(body_color, Vec2f::inew(-1, 0)),
+            Pixel::new(body_color, Vec2f::inew(1, 0)),
+            Pixel::new(body_color, Vec2f::inew(0, -1)),
+            Pixel::new(body_color, Vec2f::inew(0, -2)),
+            Pixel::new(body_color, Vec2f::inew(-1, -2)),
+            Pixel::new(body_color, Vec2f::inew(1, -2)),
+            Pixel::new(body_color, Vec2f::inew(0, -3)),
+
+            Pixel::new(eyes_color, Vec2f::inew(-1, -3)),
+            Pixel::new(eyes_color, Vec2f::inew(1, -3)),
+
+            Pixel::new(body_color, Vec2f::inew(0, -4)),
+            Pixel::new(body_color, Vec2f::inew(-1, -4)),
+            Pixel::new(body_color, Vec2f::inew(1, -4)),
+            Pixel::new(body_color, Vec2f::inew(0, 1)),
+            Pixel::new(body_color, Vec2f::inew(-1, 2)),
+            Pixel::new(body_color, Vec2f::inew(1, 2)),
+        ]
+    });
+
+    a.set_position(center);
 
     loop {
         screen.clear();
-
-        screen.set_pixel(Vec2f::inew(1, 1), Pixel::from_color(Color::Magenta));
-
-        // for px in &px_list {
-        //     screen.set_pixel_2(center, px);
-        // }
+        
+        a.add_to_frame(&mut screen);
 
         screen.update();
 
         screen.wait_frame();
+
+        if screen.key(KeyCode::Right){
+            a.translate(Vec2f::inew(1, 0));
+        }
+        if screen.key(KeyCode::Left){
+            a.translate(Vec2f::inew(-1, 0));            
+        }
+        if screen.key(KeyCode::Up){
+            a.translate(Vec2f::inew(0, -1));            
+        }
+        if screen.key(KeyCode::Down){
+            a.translate(Vec2f::inew(0, 1));            
+        }
 
         if screen.key(KeyCode::Esc) {
             break;

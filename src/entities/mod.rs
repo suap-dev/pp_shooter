@@ -34,7 +34,11 @@ impl Entity for Actor {
     }
 }
 impl Drawable for Actor {
-    fn add_to_frame(&self, screen: &mut MyEngine) {}
+    fn add_to_frame(&self, screen: &mut MyEngine) {
+        for px in &self.model.pixels {
+            screen.set_pixel(self.position, px);
+        }
+    }
 }
 
 pub struct Pawn {
@@ -91,12 +95,9 @@ impl Entity for Pawn {
 
 // TODO: make model as set of pixels
 pub struct Model {
-    model: Pixel,
+    pub pixels: Vec<Pixel>,
 }
 impl Model {
-    pub fn from_pixel(pixel: Pixel) -> Self {
-        Self { model: pixel }
-    }
 }
 
 enum Facing {
