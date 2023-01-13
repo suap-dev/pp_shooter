@@ -1,7 +1,7 @@
 pub mod entities;
 pub mod engine;
 
-use engine::{vector2f::Vec2f, Pixel};
+use engine::{vector2f::Vec2f, pixel::Pixel};
 use console_engine::{Color, KeyCode};
 
 

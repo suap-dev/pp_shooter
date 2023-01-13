@@ -2,7 +2,7 @@ pub mod traits;
 
 use traits::*;
 use crate::engine::vector2f::Vec2f;
-use crate::engine::{Pixel, MyEngine};
+use crate::engine::{pixel::Pixel, MyEngine};
 
 pub struct Actor {
     model: Model,

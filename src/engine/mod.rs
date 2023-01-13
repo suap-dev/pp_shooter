@@ -1,7 +1,9 @@
 pub mod vector2f;
+pub mod pixel;
 
 use console_engine::{self, Color, ConsoleEngine, KeyCode};
 use vector2f::Vec2f;
+use pixel::Pixel;
 
 pub struct MyEngine {
     my_console: ConsoleEngine,
@@ -50,12 +52,3 @@ impl MyEngine {
 }
 
 
-pub struct Pixel {
-    color: Color,
-    position: Vec2f,
-}
-impl Pixel {
-    pub fn from_color(color: Color) -> Self {
-        Self { color, position: Vec2f::zero() }
-    }
-}
