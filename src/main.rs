@@ -1,75 +1,52 @@
-mod data_structs;
-mod entities;
+pub mod entities;
+pub mod engine;
 
-use data_structs::{Coords, Facing};
-use entities::{Player, Projectile};
+use engine::{vector2f::Vec2f, Pixel};
+use console_engine::{Color, KeyCode};
 
-use console_engine::{ConsoleEngine, KeyCode};
 
 fn main() {
-    let mut screen = ConsoleEngine::init(30, 15, 30).unwrap();
-    // Vec needs to know what type of data it stores
-
-    let mut projectiles: Vec<Projectile> = Vec::new();
-
-    let bullet: Projectile = Projectile {
-        position: Coords { x: -1, y: -1 },
-        model: String::from("-"), // length of this string should be taken into consideration
-        velocity: 1,
-        valid: true,
-    };
-
-    let mut p1 = Player {
-        model: [String::from("c==3"), String::from("Ɛ==ↄ")],
-        facing: Facing::Left,
-        position: Coords { x: 8, y: 4 },
-        should_shoot: false,
-    };
-
+    let mut screen = engine::MyEngine::init(30, 15, 15);
+    
     loop {
-        // if projectile is valid -> retain it
-        // let is_valid = |x: &Projectile| x.valid;
-        // projectiles.retain(is_valid);
+        screen.clear();
 
-        projectiles.retain(|x| x.valid);
+        screen.set_pixel(
+            Vec2f::inew(1, 1),            
+            Pixel::from_color(Color::Magenta),
+        );
 
-        // TODO: when I grow up I will do it through retain_mut
+        screen.update();
 
-        // this clears everything
-        screen.clear_screen();
-
-        // we are going to create a picture
-        p1.update_frame(&mut screen);
-        for projectile in &mut projectiles {
-            projectile.update_frame(&mut screen);
-        }
-        screen.print(1, 1, projectiles.len().to_string().as_str());
-
-        // here we are drawing created picture
-        screen.draw();
-
-        // pausing program till the next frame, so we can...
         screen.wait_frame();
 
-        // ...handle the logic, keys, maths, etc.
-        if screen.is_key_held(KeyCode::Right) {
-            p1.go_right(&mut screen);
-        }
-        if screen.is_key_held(KeyCode::Left) {
-            p1.go_left(&mut screen);
-        }
-        if screen.is_key_held(KeyCode::Up) {
-            p1.go_up(&mut screen);
-        }
-        if screen.is_key_held(KeyCode::Down) {
-            p1.go_down(&mut screen);
-        }
-        if screen.is_key_released(KeyCode::Enter) {
-            let bullet1 = p1.shoot(&bullet);
-            projectiles.push(bullet1);
-        }
-        if screen.is_key_pressed(KeyCode::Esc) {
+        if screen.key(KeyCode::Esc){
             break;
         }
     }
 }
+
+
+// let mut screen;
+// screen = ConsoleEngine::init(30, 15, 15).unwrap();
+
+// // let a1 = Actor::from_model(Model::from_string("<3".to_string()));
+// let mut p1 = Pawn::new(&screen, Model::new_pixel(Color::Magenta), Vec2f::new(0.5, 0.8));
+// p1.set_position(Vec2f::inew(5, 9));
+
+
+
+// loop {        
+//     screen.clear_screen();
+
+//     // a1.add_to_frame(&mut screen);
+//     p1.add_to_frame(&mut screen);
+
+//     screen.draw();        
+
+//     screen.wait_frame();
+//     if screen.is_key_pressed(KeyCode::Esc) {
+//         break;
+//     }
+    
+//     // p1.update();
