@@ -1,8 +1,8 @@
 pub mod traits;
 
-use traits::*;
 use crate::engine::vector2f::Vec2f;
 use crate::engine::{pixel::Pixel, MyEngine};
+use traits::*;
 
 pub struct Actor {
     model: Model,
@@ -51,7 +51,6 @@ impl Pawn {
         }
     }
 
-    
     // pub fn update_position(&mut self) {
     //     self.actor.position += self.velocity;
     // }
@@ -90,16 +89,13 @@ impl Entity for Pawn {
     }
 }
 
-
 // TODO: make model as set of pixels
 pub struct Model {
     model: Pixel,
 }
 impl Model {
     pub fn from_pixel(pixel: Pixel) -> Self {
-        Self {
-            model: pixel
-        }
+        Self { model: pixel }
     }
 }
 
@@ -107,4 +103,3 @@ enum Facing {
     Left,
     Right,
 }
-
