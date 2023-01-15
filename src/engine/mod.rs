@@ -21,9 +21,9 @@ impl MyEngine {
 
         let position = position + pixel.offset;
         let x = position.x() * 2.0;
-        self.my_console.set_pxl(x as i32, position.y() as i32, pixel.ce_pix);
+        self.my_console.set_pxl(x as i32, position.y() as i32, pixel.ce_pixel);
         self.my_console
-            .set_pxl((x + 1.0) as i32, position.y() as i32, pixel.ce_pix);
+            .set_pxl((x + 1.0) as i32, position.y() as i32, pixel.ce_pixel);
     }
 
     pub fn key(&self, key: KeyCode) -> bool {
