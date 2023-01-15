@@ -12,7 +12,7 @@ pub trait Entity {
 }
 
 pub trait Drawable {
-    fn add_to_frame(&self, screen: &mut MyEngine);
+    fn add_to_screen(&self, screen: &mut MyEngine);
 }
 
 enum Facing {

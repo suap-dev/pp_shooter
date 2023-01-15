@@ -43,7 +43,7 @@ fn main() {
     loop {
         screen.clear();
 
-        a.add_to_frame(&mut screen);
+        screen.add_to_frame(&a);
 
         screen.update();
 

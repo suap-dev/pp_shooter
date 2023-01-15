@@ -37,8 +37,8 @@ impl Pawn {
     // }
 }
 impl Drawable for Pawn {
-    fn add_to_frame(&self, screen: &mut MyEngine) {
-        self.actor.add_to_frame(screen);
+    fn add_to_screen(&self, screen: &mut MyEngine) {
+        self.actor.add_to_screen(screen);
     }
 }
 impl Entity for Pawn {

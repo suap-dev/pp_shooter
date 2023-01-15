@@ -5,6 +5,8 @@ use console_engine::{ConsoleEngine, KeyCode};
 use pixel::Pixel;
 use vector2f::Vec2f;
 
+use crate::entities::Drawable;
+
 pub struct MyEngine {
     my_console: ConsoleEngine,
 }
@@ -48,5 +50,9 @@ impl MyEngine {
 
     pub fn get_width(&self) -> u32 {
         self.my_console.get_width() / 2
+    }
+
+    pub fn add_to_frame<T: Drawable> (&mut self, drawable: &T){
+        drawable.add_to_screen(self);
     }
 }

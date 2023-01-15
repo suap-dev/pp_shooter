@@ -31,7 +31,7 @@ impl Entity for Actor {
     }
 }
 impl Drawable for Actor {
-    fn add_to_frame(&self, screen: &mut MyEngine) {
+    fn add_to_screen(&self, screen: &mut MyEngine) {
         for px in &self.model.pixels {
             screen.set_pixel(self.position, px);
         }
